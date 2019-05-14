@@ -41,7 +41,7 @@ public class Foodlist {
 		ArrayList<Node>n=GetAllNodes();
 		for(int i=0;i<n.size();i++) {
 			System.out.println("Name:"+n.get(i).GetName()+",  Time:"+n.get(i).GetTime()+",  Price:"+n.get(i).GetPrice()+",  Address:"+n.get(i).GetAddress()+",  img:"+n.get(i).Geturl());
-			downloadPhotos(n.get(i).GetName(),n.get(i).GetName(), n.get(i).Geturl());
+			//downloadPhotos(n.get(i).GetName(),n.get(i).GetName(), n.get(i).Geturl());
 		}
 	}
 	  public void downloadPhotos(String USERID, String OID, String urlString) throws Exception {
