@@ -10,4 +10,4 @@ nccu美食拾荒器
 
 4.(新增)foodlist放置所有的Node(一個一個店家的節點),詳述請看Node class 內有節點有的詳細資料型態
 
-5.(新增)---基本上我把所有的東西包裝到foodlist內,裡面有一個 method:GetAllNodes(),可以利用node拿到我所有爬取的資料---
+5.(新增)基本上我把所有的東西包裝到foodlist內,裡面有一個 method:GetAllNodes(),可以利用node拿到我所有爬取的資料
