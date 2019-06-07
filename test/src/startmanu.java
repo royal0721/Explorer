@@ -1,5 +1,6 @@
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,16 +14,24 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class startmanu {
-public static void main(String[]args) throws Exception {
-    Foodlist fl=new Foodlist();
-    fl.printNodes();
+public static void main(String[] args) throws Exception {    
+	sqliteloading sql=new sqliteloading();
+    ArrayList<String> s=new ArrayList<String>();
+	s=sql.select("甜點");
+    for(int i=0;i<s.size();i=i+2) {
+	System.out.println(s.get(i));
+	File file=new File(s.get(i+1));
+    }
+    
 	JFrame mainapp=new MainApp();
     
     mainapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     ImageIcon myImageIcon = new ImageIcon("src\\image\\駱駝.PNG");
     mainapp.setIconImage(myImageIcon.getImage() );
     mainapp.setTitle("政大沙漠拓荒器");
-    mainapp.setVisible(true);  
+    mainapp.setVisible(true); 
+	
+    sql.closeC();
 }
 
 }
