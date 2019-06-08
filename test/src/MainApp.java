@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,8 @@ import javax.swing.JTextField;
 
 import com.sun.javafx.*;
 
+import sun.net.www.content.audio.x_aiff;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
@@ -30,6 +33,8 @@ import java.awt.Dimension;
 import javax.swing.*;
 
 import java.awt.Graphics;
+import java.awt.GridLayout;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
@@ -37,6 +42,7 @@ import org.openstreetmap.gui.jmapviewer.OsmMercator;
 public class MainApp extends JFrame {
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 800;
+	private static final int FIELD_WIDTH = 1;
 	private JButton search;
 	private JTextField findTextField;
 	private JLabel searchtext;
@@ -86,27 +92,35 @@ public class MainApp extends JFrame {
 		JPanel FirstPanel = new JPanel();
 		FirstPanel.setLayout(new BoxLayout(FirstPanel, BoxLayout.X_AXIS));
 		FirstPanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
-
-        JLabel findLabel = new JLabel("範圍 owo");
+		JLabel banner = new JLabel(new ImageIcon("D:\\Users\\AndyraySu\\Desktop\\FotoJet.jpg")); 
+		JPanel northPanel = new JPanel();
+		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+		
+		
+        JLabel findLabel = new JLabel("範圍");
         FirstPanel.add(findLabel);
 
         FirstPanel.add(Box.createRigidArea(new Dimension(6, 0)));
 
-        findTextField = new JTextField(30);
+        findTextField = new JTextField(FIELD_WIDTH);
         FirstPanel.add(findTextField);
 
         FirstPanel.add(Box.createRigidArea(new Dimension(6, 0)));
         search = searchbtn();
         FirstPanel.add(search);
         createlabel();
+        northPanel.add(banner);
+        northPanel.add(FirstPanel);
         JPanel SecondPanel = new JPanel();
 
         SecondPanel.add(createlabel());
+        FirstPanel.add(SecondPanel);
         
 		JPanel controlPanel = new JPanel();
-		controlPanel.add(FirstPanel);
-		controlPanel.add(SecondPanel);
+		controlPanel.add(northPanel);
+		
 		controlPanel.setBackground(Color.WHITE);
+		controlPanel.setLayout(new FlowLayout());
 		add(controlPanel,BorderLayout.NORTH);
 
 		JPanel submitPanel=new JPanel();

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="test/src"/>
+	<classpathentry excluding="test/src/" kind="src" path=""/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/JMapViewer-1.14.1-Demo.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/jsoup-1.12.1.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/jsoup-1.12.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/jsoup-1.12.1-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/JMapViewer-1.14.1.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/sqlite-jdbc-3.27.2.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

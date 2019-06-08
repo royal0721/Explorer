@@ -23,12 +23,13 @@ public static void main(String[] args) throws Exception {
 	File file=new File(s.get(i+1));
     }
     
-	JFrame mainapp=new MainApp();
+	JFrame mainapp=new MainPanel();
     
     mainapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     ImageIcon myImageIcon = new ImageIcon("src\\image\\駱駝.PNG");
     mainapp.setIconImage(myImageIcon.getImage() );
     mainapp.setTitle("政大沙漠拓荒器");
+    mainapp.pack();
     mainapp.setVisible(true); 
 	
     sql.closeC();
