@@ -52,10 +52,12 @@ public class Foodlist {
 	       byte[] bs = new byte[1024];                        
 	       int len;                                           
 	       String downloadDir = "C:\\Users\\Vivi\\git\\repository\\test\\src\\image";
+	       //String downloadDir = "/Users/changhungchao/Desktop/Java/107-2/Explorer/bin/image";
 	       File downloadFilePath = new File(downloadDir);
 	       if(downloadFilePath.exists() == false)              
 	       	 downloadFilePath.mkdirs();
 	       String FILENAME = downloadDir+"\\"+OID+".jpg";      
+	       //String FILENAME = downloadDir+"/"+OID+".jpg";
 	       OutputStream os = new FileOutputStream(FILENAME);  
 	       while ((len = is.read(bs)) != -1) {
 	         os.write(bs, 0, len);

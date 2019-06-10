@@ -92,7 +92,8 @@ public class MainApp extends JFrame {
 		JPanel FirstPanel = new JPanel();
 		FirstPanel.setLayout(new BoxLayout(FirstPanel, BoxLayout.X_AXIS));
 		FirstPanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
-		JLabel banner = new JLabel(new ImageIcon("D:\\Users\\AndyraySu\\Desktop\\FotoJet.jpg")); 
+		//JLabel banner = new JLabel(new ImageIcon("D:\\Users\\AndyraySu\\Desktop\\FotoJet.jpg")); 
+		JLabel banner = new JLabel(new ImageIcon("/Users/changhungchao/Pictures/java project/Map_巴東蜀味.png"));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
 		

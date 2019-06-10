@@ -42,7 +42,8 @@ public class MainPanel extends JFrame{
 		panel_3.add(panel_4);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon(MainPanel.class.getResource("/image/FotoJet.jpg")).getImage().getScaledInstance(350, 130, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(MainPanel.class.getResource("/image/Map_巴東蜀味.png")).getImage().getScaledInstance(350, 130, Image.SCALE_DEFAULT));
+		//ImageIcon imageIcon = new ImageIcon(new ImageIcon(MainPanel.class.getResource("/image/FotoJet.jpg")).getImage().getScaledInstance(350, 130, Image.SCALE_DEFAULT));
 		lblNewLabel_1.setIcon(imageIcon);
 		panel_4.add(lblNewLabel_1);
 		

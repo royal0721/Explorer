@@ -17,7 +17,7 @@ public class startmanu {
 public static void main(String[] args) throws Exception {    
 	sqliteloading sql=new sqliteloading();
     ArrayList<String> s=new ArrayList<String>();
-	s=sql.select("甜點");
+	s=sql.select("");
     for(int i=0;i<s.size();i=i+2) {
 	System.out.println(s.get(i));
 	File file=new File(s.get(i+1));
