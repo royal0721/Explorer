@@ -22,9 +22,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainPanel extends JFrame{
 	private JTextField textField;
+	private JLabel lblNewLabel;
 	public MainPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -61,12 +64,17 @@ public class MainPanel extends JFrame{
 		panel.add(horizontalGlue);
 		
 		JButton btnNewButton = new JButton("搜尋");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblNewLabel.setText("目標鎖定:" + textField.getText());
+			}
+		});
 		panel.add(btnNewButton);
 		
 		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut_4);
 		
-		JLabel lblNewLabel = new JLabel("目標鎖定");
+		lblNewLabel = new JLabel("目標鎖定");
 		panel.add(lblNewLabel);
 		
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
