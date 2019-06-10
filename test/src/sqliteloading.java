@@ -30,7 +30,8 @@ public class sqliteloading {
 		    		  	   " TIME    VARCHAR(30), "+		    		  	   
 		    		  	   " PRICE   VARCHAR(20), "+
 		    		  	   " ADDRESS VARCHAR(50), "+
-		    		  	   " IMG     VARCHAR(50));";
+		    		  	   " IMG     VARCHAR(50), "+
+		    		  	   " MAPIMG  VARCHAR(50));";
 		      stmt.executeUpdate(sql);
 		      stmt.close();		      		      
 		 }	  catch ( Exception e ) {
@@ -41,15 +42,16 @@ public class sqliteloading {
 		try{
 			c.setAutoCommit(false);
 			for(int i=0;i<nodes.size();i++) {
-				String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG) " +
-	              "VALUES (?, ?, ?, ?, ?, ?)"; 
+				String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG,MAPIMG) " +
+	              "VALUES (?, ?, ?, ?, ?, ?, ?)"; 
 				ps=c.prepareStatement(sql);
 				ps.setString(1, nodes.get(i).GetName());
 				ps.setString(2, null);
 				ps.setString(3, nodes.get(i).GetTime());
 				ps.setString(4, nodes.get(i).GetPrice());
 				ps.setString(5, nodes.get(i).GetAddress());					
-				ps.setString(6, "src\\image\\"+nodes.get(i).GetName()+".jpg");    				
+				ps.setString(6, "src\\image\\"+nodes.get(i).GetName()+".jpg");
+				ps.setString(7, "src\\image\\Map_"+nodes.get(i).GetName()+".png");
 				ps.executeUpdate();
 				c.commit();				
 			}		      
@@ -86,15 +88,16 @@ public class sqliteloading {
 	}
 	public void insert(String n,String tp,String t,String p,String a) throws Exception{
 		try{
-			String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG) " +		
-	              "VALUES (?, ?, ?, ?, ? )";         
+			String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG,MAPIMG) " +		
+	              "VALUES (?, ?, ?, ?, ? ,?, ?)";         
 			ps = c.prepareStatement(sql);
 			ps.setString(1, n);
 			ps.setString(2, tp);
 			ps.setString(3, t);
 			ps.setString(4, p);
 			ps.setString(5, a);					
-			ps.setString(6, "src\\image\\"+n+".jpg");			
+			ps.setString(6, "src\\image\\"+n+".jpg");
+			ps.setString(7, "src\\image\\Map_"+n+".png");
 			ps.executeUpdate();		
 			ps.close();						
 		}	catch ( Exception e ) {
@@ -103,7 +106,7 @@ public class sqliteloading {
     }
 	public void update(String n,String tp,String t,String p,String a) throws Exception{
         try{
-        	String sql = "UPDATE RESTAURANT SET TYPE=?,TIME=?,PRICE=?,ADDRESS=?,IMG=? WHERE NAME = ?";               
+        	String sql = "UPDATE RESTAURANT SET TYPE=?,TIME=?,PRICE=?,ADDRESS=?,IMG=? WHERE NAME = ?,MAPIMG=?";               
         	ps = c.prepareStatement(sql);               
         	ps.setString(1, tp);
         	ps.setString(2, t);
@@ -111,6 +114,7 @@ public class sqliteloading {
         	ps.setString(4, a);					
         	ps.setString(5, "src\\image\\"+n+".jpg");
         	ps.setString(6, n);
+        	ps.setString(7, "src\\image\\Map_"+n+".png");
         	ps.executeUpdate();
         	ps.close();
         }	catch ( Exception e ) {

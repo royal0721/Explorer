@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="/Users/changhungchao/Downloads/jsoup-1.12.1.jar"/>
 	<classpathentry kind="lib" path="/Users/changhungchao/Downloads/LiveEditMapViewerJ.jar"/>
 	<classpathentry kind="lib" path="/Users/changhungchao/Downloads/sqlite-jdbc-3.27.2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/changhungchao/Downloads/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
