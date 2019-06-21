@@ -87,6 +87,32 @@ public class sqliteloading {
 	      e.printStackTrace();	      
 	    }return str;	    
 	}
+	
+	public ArrayList<String> selectName(String n) throws Exception{
+	    try {
+	    	str.clear();
+	    	String sql =  "SELECT * FROM RESTAURANT WHERE TYPE LIKE ? OR NAME LIKE ?";		    	    			    			    			
+	    	ps = c.prepareStatement(sql);
+	    	ps.setString(1, "%"+n+"%");
+	    	ps.setString(2, "%"+n+"%");
+	    	ResultSet rs = ps.executeQuery();
+	    	while ( rs.next() ) {	    	  
+	    		String name = rs.getString("name");
+	    		String type = rs.getString("type");
+	    		String time = rs.getString("time");
+	    		String price = rs.getString("price");
+	    		if(price==null) {price="無";}
+	    		String address = rs.getString("address");
+	    		String img = rs.getString("img");		    				
+	    		str.add(name);
+	    	}
+	        rs.close();
+	        stmt.close();		    	  	      
+	     } catch ( Exception e ) {
+	      e.printStackTrace();	      
+	    }return str;	    
+	}
+	
 	public void insert(String n,String tp,String t,String p,String a) throws Exception{
 		try{
 			String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG,MAPIMG) " +		
