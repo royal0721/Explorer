@@ -88,6 +88,31 @@ public class sqliteloading {
 	    }return str;	    
 	}
 	
+	public ArrayList<String> selectList(String n) throws Exception{
+	    try {
+	    	str.clear();
+	    	String sql =  "SELECT * FROM RESTAURANT WHERE TYPE LIKE ? OR NAME LIKE ?";		    	    			    			    			
+	    	ps = c.prepareStatement(sql);
+	    	ps.setString(1, "%"+n+"%");
+	    	ps.setString(2, "%"+n+"%");
+	    	ResultSet rs = ps.executeQuery();
+	    	while ( rs.next() ) {	    	  
+	    		String name = rs.getString("name");
+	    		String type = rs.getString("type");
+	    		String time = rs.getString("time");
+	    		String price = rs.getString("price");
+	    		if(price==null) {price="無";}
+	    		String address = rs.getString("address");
+	    		String img = rs.getString("img");		    				
+	    		str.add("店家名稱: "+name+"\n種類: "+type+"\n營業時間: "+time+"\n價位: "+price+"\n地址: "+address+"\n");
+	    	}
+	        rs.close();
+	        stmt.close();		    	  	      
+	     } catch ( Exception e ) {
+	      e.printStackTrace();	      
+	    }return str;	    
+	}
+	
 	public ArrayList<String> selectName(String n) throws Exception{
 	    try {
 	    	str.clear();
