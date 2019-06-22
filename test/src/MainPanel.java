@@ -95,19 +95,16 @@ public class MainPanel extends JFrame {
 				lblNewLabel.setText("目標鎖定:" + textField.getText());
 				try {
 					ArrayList<String> ab = sqliteloading.selectName(textField.getText());
-					
+
 					listModel.removeAllElements();
 					for (String s : ab) {
 						listModel.addElement(s);
 					}
-					
+
 					list.setModel(listModel);
-					// Object[] values = ab.toArray();
-					// list.setListData(values);
 
 					revalidate();
 					repaint();
-					
 
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -345,7 +342,7 @@ public class MainPanel extends JFrame {
 						// TODO: handle exception
 					}
 
-				}else {
+				} else {
 					listModel.removeAllElements();
 					list.setModel(listModel);
 					revalidate();
@@ -417,52 +414,10 @@ public class MainPanel extends JFrame {
 			}
 		});
 
-		// list.setModel(new AbstractListModel() {
-		// String[] values = new String[] {};
-		// public int getSize() {
-		// return values.length;
-		// }
-		// public Object getElementAt(int index) {
-		// return values[index];
-		// }
-		// });
 		scrollPane.setViewportView(list);
 
 		panel_7 = new JPanel();
 		getContentPane().add(panel_7, BorderLayout.EAST);
-		// panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.Y_AXIS));
-
-		// JScrollPane scrollPane_1 = new JScrollPane();
-		// panel_7.add(scrollPane_1);
-
-		// JTextArea textArea = new JTextArea();
-		// scrollPane_1.setViewportView(textArea);
-
-		// JLabel lblNewLabel_2 = new JLabel("New label");
-		// panel_7.add(lblNewLabel_2);
-
-		// JLabel lblNewLabel_3 = new JLabel("New label");
-		// panel_7.add(lblNewLabel_3);
-
-		// sqliteloading.closeC();
-	}
-
-	public ArrayList<String> getName(String s) {
-		try {
-			ArrayList<String> ab = sqliteloading.selectName(s);
-			for (int i = 0; i < ab.size(); i = i + 2) {
-				System.out.println(ab.get(i));
-				if ((i + 1 < ab.size())) {
-					File file = new File(ab.get(i + 1));
-				}
-			}
-			return ab;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			ArrayList<String> listOne = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "f"));
-			return listOne;
-		}
 
 	}
 

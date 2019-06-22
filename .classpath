@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/jsoup-1.12.1-sources.jar"/>
 	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/JMapViewer-1.14.1.jar"/>
 	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/sqlite-jdbc-3.27.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/darcula.jar"/>
+	<classpathentry kind="lib" path="D:/Users/AndyraySu/Downloads/seaglasslookandfeel-0.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
