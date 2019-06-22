@@ -1,6 +1,8 @@
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.File;
 import java.io.OutputStream;
 
@@ -28,7 +30,7 @@ public class sqliteloading {
 		    		  	   "(NAME    VARCHAR(30) PRIMARY KEY, "+
 		    		  	   " TYPE    VARCHAR(15),"+
 		    		  	   " TIME    VARCHAR(30), "+		    		  	   
-		    		  	   " PRICE   VARCHAR(20), "+
+		    		  	   " PRICE   INT, "+
 		    		  	   " ADDRESS VARCHAR(50), "+
 		    		  	   " IMG     VARCHAR(50), "+
 		    		  	   " MAPIMG  VARCHAR(50));";
@@ -40,7 +42,7 @@ public class sqliteloading {
 	}
 	public void setTable() throws Exception {
 		try{
-			c.setAutoCommit(false);
+			c.setAutoCommit(false);			
 			for(int i=0;i<nodes.size();i++) {
 				String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG,MAPIMG) " +
 	              "VALUES (?, ?, ?, ?, ?, ?, ?)"; 
@@ -48,7 +50,16 @@ public class sqliteloading {
 				ps.setString(1, nodes.get(i).GetName());
 				ps.setString(2, null);
 				ps.setString(3, nodes.get(i).GetTime());
-				ps.setString(4, nodes.get(i).GetPrice());
+				int price=0;
+				String o=nodes.get(i).GetPrice();
+				if(o!=null){
+					Pattern p = Pattern.compile("(\\D*)(\\d+)(.*)");
+					Matcher m = p.matcher(o);					
+						
+					if (m.find()) {							
+						price=Integer.parseInt(m.group(2));}
+				}
+				ps.setInt(4, price);
 				ps.setString(5, nodes.get(i).GetAddress());					
 				ps.setString(6, "src\\image\\"+nodes.get(i).GetName()+".jpg");
 				ps.setString(7, "src\\image\\Map_"+nodes.get(i).GetName()+".png");
@@ -57,29 +68,28 @@ public class sqliteloading {
 			}		      
 			ps.close();	
 			updateType();
+			updatePrice();
 		}	catch ( Exception e ) {
 			e.printStackTrace();
 		 }
 	}
-	public ArrayList<String> select(String n) throws Exception{
+	public ArrayList<String> selectPrice(int l,int h) throws Exception{
 	    try {
 	    	str.clear();
-	    	String sql =  "SELECT * FROM RESTAURANT WHERE TYPE LIKE ? OR NAME LIKE ?";		    	    			    			    			
+	    	String sql =  "SELECT * FROM RESTAURANT WHERE PRICE>=? AND PRICE<?";		    	    			    			    			
 	    	ps = c.prepareStatement(sql);
-	    	ps.setString(1, "%"+n+"%");
-	    	ps.setString(2, "%"+n+"%");
+	    	ps.setInt(1, l);
+	    	ps.setInt(2, h);
 	    	ResultSet rs = ps.executeQuery();
 	    	while ( rs.next() ) {	    	  
 	    		String name = rs.getString("name");
 	    		String type = rs.getString("type");
 	    		String time = rs.getString("time");
-	    		String price = rs.getString("price");
-	    		if(price==null) {price="無";}
+	    		int price = rs.getInt("price");	    		
 	    		String address = rs.getString("address");
-	    		String img = rs.getString("img");		    				
+	    			    				
 	    		str.add("店家名稱: "+name+"\n種類: "+type+"\n營業時間: "+time+"\n價位: "+price+"\n地址: "+address+"\n");
-	    		
-	    		str.add(img);
+	    			    		
 	    	}
 	        rs.close();
 	        stmt.close();		    	  	      
@@ -100,10 +110,8 @@ public class sqliteloading {
 	    		String name = rs.getString("name");
 	    		String type = rs.getString("type");
 	    		String time = rs.getString("time");
-	    		String price = rs.getString("price");
-	    		if(price==null) {price="無";}
-	    		String address = rs.getString("address");
-	    		String img = rs.getString("img");		    				
+	    		int price = rs.getInt("price");
+	    		String address = rs.getString("address");		    				
 	    		str.add("店家名稱: "+name+"\n種類: "+type+"\n營業時間: "+time+"\n價位: "+price+"\n地址: "+address+"\n");
 	    	}
 	        rs.close();
@@ -122,13 +130,7 @@ public class sqliteloading {
 	    	ps.setString(2, "%"+n+"%");
 	    	ResultSet rs = ps.executeQuery();
 	    	while ( rs.next() ) {	    	  
-	    		String name = rs.getString("name");
-	    		String type = rs.getString("type");
-	    		String time = rs.getString("time");
-	    		String price = rs.getString("price");
-	    		if(price==null) {price="無";}
-	    		String address = rs.getString("address");
-	    		String img = rs.getString("img");		    				
+	    		String name = rs.getString("name");	    				    				
 	    		str.add(name);
 	    	}
 	        rs.close();
@@ -138,7 +140,7 @@ public class sqliteloading {
 	    }return str;	    
 	}
 	
-	public void insert(String n,String tp,String t,String p,String a) throws Exception{
+	public void insert(String n,String tp,String t,int p,String a) throws Exception{
 		try{
 			String sql = "INSERT INTO RESTAURANT (NAME,TYPE,TIME,PRICE,ADDRESS,IMG,MAPIMG) " +		
 	              "VALUES (?, ?, ?, ?, ? ,?, ?)";         
@@ -146,7 +148,7 @@ public class sqliteloading {
 			ps.setString(1, n);
 			ps.setString(2, tp);
 			ps.setString(3, t);
-			ps.setString(4, p);
+			ps.setInt(4, p);
 			ps.setString(5, a);					
 			ps.setString(6, "src\\image\\"+n+".jpg");
 			ps.setString(7, "src\\image\\Map_"+n+".png");
@@ -156,13 +158,13 @@ public class sqliteloading {
 			e.printStackTrace();
 		}
     }
-	public void update(String n,String tp,String t,String p,String a) throws Exception{
+	public void update(String n,String tp,String t,int p,String a) throws Exception{
         try{
         	String sql = "UPDATE RESTAURANT SET TYPE=?,TIME=?,PRICE=?,ADDRESS=?,IMG=? WHERE NAME = ?,MAPIMG=?";               
         	ps = c.prepareStatement(sql);               
         	ps.setString(1, tp);
         	ps.setString(2, t);
-        	ps.setString(3, p);
+        	ps.setInt(3, p);
         	ps.setString(4, a);					
         	ps.setString(5, "src\\image\\"+n+".jpg");
         	ps.setString(6, n);
@@ -303,6 +305,30 @@ public class sqliteloading {
         	stmt.executeUpdate(sql);
         	sql = "UPDATE RESTAURANT SET TYPE='台式'  WHERE NAME ='佳味自助餐'";
         	stmt.executeUpdate(sql);   
+        	stmt.close();
+        }	catch ( Exception e ) {
+    		e.printStackTrace();
+   	 	}
+	}
+	public void updatePrice() throws Exception{
+		try{
+			stmt=c.createStatement();
+        	String sql = "UPDATE RESTAURANT SET PRICE=150 WHERE NAME ='敏忠餐廳'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=100 WHERE NAME ='呷麵騎士'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=400 WHERE NAME ='巴東蜀味'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=80 WHERE NAME ='MY麵屋'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=150 WHERE NAME ='波波恰恰大馬風味餐'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=80 WHERE NAME ='佳味自助餐'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=90 WHERE NAME ='私房麵'";               
+        	stmt.executeUpdate(sql);
+        	sql = "UPDATE RESTAURANT SET PRICE=50 WHERE NAME ='No. 8+9 一起冰沙吧'";               
+        	stmt.executeUpdate(sql);
         	stmt.close();
         }	catch ( Exception e ) {
     		e.printStackTrace();
