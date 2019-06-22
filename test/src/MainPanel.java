@@ -43,7 +43,7 @@ public class MainPanel extends JFrame {
 	private JLabel lblNewLabel;
 	private JList list;
 	private JScrollPane scrollPane;
-	private sqliteloading sqliteloading;
+	public static sqliteloading sqliteloading;
 	private JPanel panel_7;
 	private JCheckBox checkBox;
 	private JCheckBox chckbxNewCheckBox;
