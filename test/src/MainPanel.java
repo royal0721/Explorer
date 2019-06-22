@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.security.auth.PrivateCredentialPermission;
 import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
@@ -29,6 +30,8 @@ import org.omg.CORBA.PRIVATE_MEMBER;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -42,6 +45,12 @@ public class MainPanel extends JFrame {
 	private JScrollPane scrollPane;
 	private sqliteloading sqliteloading;
 	private JPanel panel_7;
+	private JCheckBox checkBox;
+	private JCheckBox chckbxNewCheckBox;
+	private JCheckBox checkBox_1;
+	private JCheckBox checkBox_2;
+	private DefaultListModel<String> listModel;
+	private JComboBox comboBox;
 
 	public MainPanel() throws Exception {
 		sqliteloading = new sqliteloading();
@@ -62,7 +71,7 @@ public class MainPanel extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(MainPanel.class.getResource("/image/FotoJet.jpg")).getImage()
-				.getScaledInstance(350, 130, Image.SCALE_DEFAULT));
+				.getScaledInstance(540, 200, Image.SCALE_DEFAULT));
 		lblNewLabel_1.setIcon(imageIcon);
 		panel_4.add(lblNewLabel_1);
 
@@ -86,30 +95,19 @@ public class MainPanel extends JFrame {
 				lblNewLabel.setText("目標鎖定:" + textField.getText());
 				try {
 					ArrayList<String> ab = sqliteloading.selectName(textField.getText());
-					for (int i = 0; i < ab.size(); i = i + 2) {
-						System.out.println(ab.get(i));
-						if ((i+1<ab.size())) {
-							File file = new File(ab.get(i + 1));
-						}
+					
+					listModel.removeAllElements();
+					for (String s : ab) {
+						listModel.addElement(s);
 					}
-					Object[] values = ab.toArray();
-					list.setListData(values);
+					
+					list.setModel(listModel);
+					// Object[] values = ab.toArray();
+					// list.setListData(values);
 
 					revalidate();
 					repaint();
-					// list.setModel(new AbstractListModel() {
-					// ArrayList<String> a = sqliteloading.selectName(textField.getText());
-
-					// String[] values = (String[]) a.toArray();
-					// public int getSize() {
-					// return values.length;
-					// }
-
-					// public Object getElementAt(int index) {
-					// return values[index];
-					// }
-					// });
-					// scrollPane.setViewportView(list);
+					
 
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -118,6 +116,26 @@ public class MainPanel extends JFrame {
 			}
 		});
 		panel.add(btnNewButton);
+
+		JButton button = new JButton("清除");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setText("");
+				lblNewLabel.setText("目標鎖定");
+				listModel.removeAllElements();
+				list.setModel(listModel);
+				revalidate();
+				repaint();
+				checkBox.setSelected(false);
+				chckbxNewCheckBox.setSelected(false);
+				checkBox_1.setSelected(false);
+				checkBox_2.setSelected(false);
+				comboBox.setSelectedIndex(0);
+				panel_7.removeAll();
+				pack();
+			}
+		});
+		panel.add(button);
 
 		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
 		panel.add(horizontalStrut_4);
@@ -131,53 +149,64 @@ public class MainPanel extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_3.add(panel_2);
 
-		JCheckBox checkBox = new JCheckBox("日式");
+		checkBox = new JCheckBox("日式");
 		checkBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					ArrayList<String> jp = sqliteloading.selectName("日式");
+
+					listModel = (DefaultListModel<String>) list.getModel();
+
 					if (checkBox.isSelected()) {
-						ArrayList<String> ab = sqliteloading.selectName("日式");
-						for (int i = 0; i < ab.size(); i = i + 2) {
-							System.out.println(ab.get(i));
-							if ((i+1<ab.size())) {
-								File file = new File(ab.get(i + 1));
-							}
-							
+						for (String s : jp) {
+
+							listModel.addElement(s);
+
 						}
-						Object[] values = ab.toArray();
-						list.setListData(values);
-					} else if (!checkBox.isSelected()) {
-						Object[] emptyList = {};
-						list.setListData(emptyList);
+					} else {
+						for (String s : jp) {
+
+							listModel.removeElement(s);
+
+						}
 					}
+					list.setModel(listModel);
+					revalidate();
+					repaint();
 
 				} catch (Exception e) {
 					// TODO: handle exception
+					System.out.println(e.getMessage());
 				}
 
 			}
 		});
 		panel_2.add(checkBox);
 
-		JCheckBox chckbxNewCheckBox = new JCheckBox("西式");
+		chckbxNewCheckBox = new JCheckBox("西式");
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (chckbxNewCheckBox.isSelected()) {
-						ArrayList<String> ab = sqliteloading.selectName("西式");
-						for (int i = 0; i < ab.size(); i = i + 2) {
-							System.out.println(ab.get(i));
-							if ((i+1<ab.size())) {
-								File file = new File(ab.get(i + 1));
-							}
-						}
-						Object[] values = ab.toArray();
-						list.setListData(values);
-					} else if (!chckbxNewCheckBox.isSelected()) {
-						Object[] emptyList = {};
-						list.setListData(emptyList);
-					}
+					ArrayList<String> jp = sqliteloading.selectName("西式");
 
+					listModel = (DefaultListModel<String>) list.getModel();
+
+					if (chckbxNewCheckBox.isSelected()) {
+						for (String s : jp) {
+
+							listModel.addElement(s);
+
+						}
+					} else {
+						for (String s : jp) {
+
+							listModel.removeElement(s);
+
+						}
+					}
+					list.setModel(listModel);
+					revalidate();
+					repaint();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -185,24 +214,30 @@ public class MainPanel extends JFrame {
 		});
 		panel_2.add(chckbxNewCheckBox);
 
-		JCheckBox checkBox_1 = new JCheckBox("台式");
+		checkBox_1 = new JCheckBox("台式");
 		checkBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					ArrayList<String> jp = sqliteloading.selectName("台式");
+
+					listModel = (DefaultListModel<String>) list.getModel();
+
 					if (checkBox_1.isSelected()) {
-						ArrayList<String> ab = sqliteloading.selectName("台式");
-						for (int i = 0; i < ab.size(); i = i + 2) {
-							System.out.println(ab.get(i));
-							if ((i+1<ab.size())) {
-								File file = new File(ab.get(i + 1));
-							}
+						for (String s : jp) {
+
+							listModel.addElement(s);
+
 						}
-						Object[] values = ab.toArray();
-						list.setListData(values);
-					} else if (!checkBox_1.isSelected()) {
-						Object[] emptyList = {};
-						list.setListData(emptyList);
+					} else {
+						for (String s : jp) {
+
+							listModel.removeElement(s);
+
+						}
 					}
+					list.setModel(listModel);
+					revalidate();
+					repaint();
 
 				} catch (Exception ex) {
 					// TODO: handle exception
@@ -211,24 +246,30 @@ public class MainPanel extends JFrame {
 		});
 		panel_2.add(checkBox_1);
 
-		JCheckBox checkBox_2 = new JCheckBox("下午茶");
+		checkBox_2 = new JCheckBox("下午茶");
 		checkBox_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					ArrayList<String> jp = sqliteloading.selectName("下午茶");
+
+					listModel = (DefaultListModel<String>) list.getModel();
+
 					if (checkBox_2.isSelected()) {
-						ArrayList<String> ab = sqliteloading.selectName("下午茶");
-						for (int i = 0; i < ab.size(); i = i + 2) {
-							System.out.println(ab.get(i));
-							if ((i+1<ab.size())) {
-								File file = new File(ab.get(i + 1));
-							}
+						for (String s : jp) {
+
+							listModel.addElement(s);
+
 						}
-						Object[] values = ab.toArray();
-						list.setListData(values);
-					} else if (!checkBox_2.isSelected()) {
-						Object[] emptyList = {};
-						list.setListData(emptyList);
+					} else {
+						for (String s : jp) {
+
+							listModel.removeElement(s);
+
+						}
 					}
+					list.setModel(listModel);
+					revalidate();
+					repaint();
 
 				} catch (Exception ex) {
 					// TODO: handle exception
@@ -241,7 +282,77 @@ public class MainPanel extends JFrame {
 		JLabel label = new JLabel("價格範圍");
 		panel_2.add(label);
 
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String combo = (String) comboBox.getSelectedItem();
+				if (combo.equals("$100以下")) {
+					try {
+						ArrayList<String> ab = sqliteloading.selectPrice(1, 100);
+						listModel.removeAllElements();
+						for (String s : ab) {
+							listModel.addElement(s);
+						}
+						list.setModel(listModel);
+						revalidate();
+						repaint();
+
+					} catch (Exception excep) {
+						// TODO: handle exception
+					}
+				} else if (combo.equals("$100-200")) {
+					try {
+						ArrayList<String> ab = sqliteloading.selectPrice(100, 200);
+						listModel.removeAllElements();
+						for (String s : ab) {
+							listModel.addElement(s);
+						}
+						list.setModel(listModel);
+						revalidate();
+						repaint();
+
+					} catch (Exception excep) {
+						// TODO: handle exception
+					}
+
+				} else if (combo.equals("$200-300")) {
+					try {
+						ArrayList<String> ab = sqliteloading.selectPrice(200, 300);
+						listModel.removeAllElements();
+						for (String s : ab) {
+							listModel.addElement(s);
+						}
+						list.setModel(listModel);
+						revalidate();
+						repaint();
+
+					} catch (Exception excep) {
+						// TODO: handle exception
+					}
+
+				} else if (combo.equals("$300以上")) {
+					try {
+						ArrayList<String> ab = sqliteloading.selectPrice(300, 100000);
+						listModel.removeAllElements();
+						for (String s : ab) {
+							listModel.addElement(s);
+						}
+						list.setModel(listModel);
+						revalidate();
+						repaint();
+
+					} catch (Exception excep) {
+						// TODO: handle exception
+					}
+
+				}else {
+					listModel.removeAllElements();
+					list.setModel(listModel);
+					revalidate();
+					repaint();
+				}
+			}
+		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { " ", "$100以下", "$100-200", "$200-300", "$300以上" }));
 		comboBox.setToolTipText("");
 
@@ -255,12 +366,14 @@ public class MainPanel extends JFrame {
 		scrollPane.setMaximumSize(new Dimension(350, 200));
 		panel_5.add(scrollPane);
 
-		list = new JList<String>();
+		listModel = new DefaultListModel<String>();
+
+		list = new JList<String>(listModel);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panel_7.removeAll();
-				
+
 				JScrollPane scrollPane_1 = new JScrollPane();
 				panel_7.add(scrollPane_1);
 
@@ -272,7 +385,7 @@ public class MainPanel extends JFrame {
 
 				JLabel lblNewLabel_3 = new JLabel();
 				panel_7.add(lblNewLabel_3);
-				
+
 				getContentPane().add(panel_7, BorderLayout.EAST);
 				panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.Y_AXIS));
 				if (e.getClickCount() == 1) {
@@ -283,18 +396,19 @@ public class MainPanel extends JFrame {
 					try {
 						ArrayList<String> listInfo = sqliteloading.selectList(selectedItem);
 						String st = "";
-						for (String str : listInfo ) {
-							st = st+str;
+						for (String str : listInfo) {
+							st = st + str;
 						}
 						textArea.setText(st);
-					}catch (Exception ex) {
+					} catch (Exception ex) {
 						// TODO: handle exception
 					}
-					String img = "/image/"+selectedItem+".jpg";
+					String img = "/image/" + selectedItem + ".jpg";
 					ImageIcon imageIcon = new ImageIcon(new ImageIcon(MainPanel.class.getResource(img)).getImage());
 					lblNewLabel_2.setIcon(imageIcon);
-					String map = "/image/Map_"+selectedItem+".png";
-					ImageIcon imageIcon1 = new ImageIcon(new ImageIcon(MainPanel.class.getResource(map)).getImage().getScaledInstance(729, 400, Image.SCALE_DEFAULT));
+					String map = "/image/Map_" + selectedItem + ".png";
+					ImageIcon imageIcon1 = new ImageIcon(new ImageIcon(MainPanel.class.getResource(map)).getImage()
+							.getScaledInstance(729, 400, Image.SCALE_DEFAULT));
 					lblNewLabel_3.setIcon(imageIcon1);
 					repaint();
 					pack();
@@ -331,6 +445,25 @@ public class MainPanel extends JFrame {
 		// panel_7.add(lblNewLabel_3);
 
 		// sqliteloading.closeC();
+	}
+
+	public ArrayList<String> getName(String s) {
+		try {
+			ArrayList<String> ab = sqliteloading.selectName(s);
+			for (int i = 0; i < ab.size(); i = i + 2) {
+				System.out.println(ab.get(i));
+				if ((i + 1 < ab.size())) {
+					File file = new File(ab.get(i + 1));
+				}
+			}
+			return ab;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			ArrayList<String> listOne = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "f"));
+			return listOne;
+		}
+
 	}
 
 }

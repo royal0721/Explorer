@@ -88,7 +88,7 @@ public class sqliteloading {
 	    		int price = rs.getInt("price");	    		
 	    		String address = rs.getString("address");
 	    			    				
-	    		str.add("店家名稱: "+name+"\n種類: "+type+"\n營業時間: "+time+"\n價位: "+price+"\n地址: "+address+"\n");
+	    		str.add(name);
 	    			    		
 	    	}
 	        rs.close();
